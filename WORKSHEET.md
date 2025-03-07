@@ -8,7 +8,7 @@ This is the worksheet for Homework 1. Your deliverables for this homework are:
 - [ ] Kaggle submission and writeup (details below)
 - [ ] Github repo with all of your code! You need to either fork it or just copy the code over to your repo. A simple way of doing this is provided below. Include the link to your repo below. If you would like to make the repo private, please dm us and we'll send you the GitHub usernames to add as collaborators.
 
-`YOUR GITHUB REPO HERE (or notice that you DMed us to share a private repo)`
+`https://github.com/deenasun/mlab-model-zhu`
 
 ## To move to your own repo:
 
@@ -28,15 +28,15 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-torch.nn.Module is a PyTorch collection that includes components for building neural networks with 4 main classes: Parameters, Containers, Layers, and Functions. The classes and functions in torch.nn automatically manage parameters like weights and biases.
+`torch.nn.Module is a PyTorch collection that includes components for building neural networks with 4 main classes: Parameters, Containers, Layers, and Functions. The classes and functions in torch.nn automatically manage parameters like weights and biases.`
 
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-A Dataset is a collection of sample points and their labels. A Dataloader is a class that wraps an iterable around a Dataset and provides additional functionality such as shuffling the data and batching it.
+`A Dataset is a collection of sample points and their labels. A Dataloader is a class that wraps an iterable around a Dataset and provides additional functionality such as shuffling the data and batching it.`
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-We use a `torch.no_grad()` context manager when we want to prevent a computational graph from being built. This is used in situations when we don't need to keep track of the partial derivatives, backpropagate, or update parameters.
+`We use a `torch.no_grad()` context manager when we want to prevent a computational graph from being built. This is used in situations when we don't need to keep track of the partial derivatives, backpropagate, or update parameters.`
 
 # Part 0: Understanding the codebase
 
@@ -44,19 +44,19 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 ## 0.0 What are the `build.py` files? Why do we have them?**
 
-`YOUR ANSWER HERE`
+`The build.py files are used to set up and build DataLoaders and models using the parameters specified in the config files. The build.py files read in the parameters from the configs then call the classes to build the models/data loaders.`
 
 ## 0.1 Where would you define a new model?
 
-`YOUR ANSWER HERE`
+`New models are defined in the /models directory.`
 
 ## 0.2 How would you add support for a new dataset? What files would you need to change?
 
-`YOUR ANSWER HERE`
+`To add a new dataset, we would edit the /data/datasets.py by defining a custom class for a Dataset with an __init__, __len__, and __getitem__ function`
 
 ## 0.3 Where is the actual training code?
 
-`YOUR ANSWER HERE`
+`The training loop is in main.py.`
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
 
