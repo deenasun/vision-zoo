@@ -28,17 +28,15 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-`YOUR ANSWER HERE`
+torch.nn.Module is a PyTorch collection that includes components for building neural networks with 4 main classes: Parameters, Containers, Layers, and Functions. The classes and functions in torch.nn automatically manage parameters like weights and biases.
 
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-`YOUR ANSWER HERE`
+A Dataset is a collection of sample points and their labels. A Dataloader is a class that wraps an iterable around a Dataset and provides additional functionality such as shuffling the data and batching it.
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-`YOUR ANSWER HERE`
-
-
+We use a `torch.no_grad()` context manager when we want to prevent a computational graph from being built. This is used in situations when we don't need to keep track of the partial derivatives, backpropagate, or update parameters.
 
 # Part 0: Understanding the codebase
 
