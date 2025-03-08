@@ -8,7 +8,7 @@ This is the worksheet for Homework 1. Your deliverables for this homework are:
 - [ ] Kaggle submission and writeup (details below)
 - [ ] Github repo with all of your code! You need to either fork it or just copy the code over to your repo. A simple way of doing this is provided below. Include the link to your repo below. If you would like to make the repo private, please dm us and we'll send you the GitHub usernames to add as collaborators.
 
-`https://github.com/deenasun/mlab-model-zhu`
+`https://github.com/deenasun/vision-zoo`
 
 ## To move to your own repo:
 
@@ -87,39 +87,39 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ### 1.1.1 What is `self.train`? What is `self.transform`?
 
-`YOUR ANSWER HERE`
+`In a Dataset, the instance variable self.train defines whether or not the Dataset is a training set or a validation/test set. self.transform is a method of the CIFAR10Dataset class that defines a series of transformations to perform on the data. In addition to normalizing and resizing, for training datasets, each sample point's contrast, brightness, and saturation are randomized and the image is randomly flipped.`
 
 ### 1.1.2 What does `__getitem__` do? What is `index`?
 
-`YOUR ANSWER HERE`
+`__getitem__ returns the item at index "index" of the dataset along with its corresponding label. "index" is an argument specifying which index of the dataset to retrieve from.`
 
 ### 1.1.3 What does `__len__` do?
 
-`YOUR ANSWER HERE`
+`__len__ returns the total number of sample points in the dataset.`
 
 ### 1.1.4 What does `self._get_transforms` do? Why is there an if statement?
 
-`YOUR ANSWER HERE`
+`self._get_transforms returns a series of PyTorch Transforms composed together that are used to process data before it is used for training or testing. The if statement adds different transform layers into the transform sequence depending on if the Dataset will be used for training or not. If the Dataset is used for training, every sample image's contrast, brightness, and saturation are randomly modified and it is flipped with probabilty of 0.5.`
 
 ### 1.1.5 What does `transforms.Normalize` do? What do the parameters mean? (hint: take a look here: https://pytorch.org/vision/main/generated/torchvision.transforms.Normalize.html)
 
-`YOUR ANSWER HERE`
+`transforms.Normalize normalizes a tensor representation of the image. The first parameter is the mean (channel-wise), the second parameter is the standard deviation (channel-wise).`
 
 ## 1.2 MediumImagenetHDF5Dataset
 
 ### 1.2.0 Go through the constructor. What field actually contains the data? Where is the data actually stored on honeydew? What other files are stored in that folder on honeydew? How large are they?
 
-`YOUR ANSWER HERE`
+`The data for the MediumImagenetHDF5 Dataset is stored in the "file" field. Based on the filepath, the data should be stored in the folder /honey/data/nmep in the file medium-imagenet-96.hdf5.`
 
 > *Some background*: HDF5 is a file format that stores data in a hierarchical structure. It is similar to a python dictionary. The files are binary and are generally really efficient to use. Additionally, `h5py.File()` does not actually read the entire file contents into memory. Instead, it only reads the data when you access it (as in `__getitem__`). You can learn more about [hdf5 here](https://portal.hdfgroup.org/display/HDF5/HDF5) and [h5py here](https://www.h5py.org/).
 
 ### 1.2.1 How is `_get_transforms` different from the one in CIFAR10Dataset?
 
-`YOUR ANSWER HERE`
+`The _get_transforms function in the MediumImagenetHDF5 Dataset also regularizes the values in each sample point to be bewteen 0 to 255 and normalizes each sample point with a mean and standard deviation. For this Dataset, we also apply a resizing that scales the image by 2. The additional steps of randomly flipping the image and randomizing the image's brightness, contrast, and saturation are applied only if the Dataset is a training split and the Dataset's augment parameter is set to True."
 
 ### 1.2.2 How is `__getitem__` different from the one in CIFAR10Dataset? How many data splits do we have now? Is it different from CIFAR10? Do we have labels/annotations for the test set?
 
-`YOUR ANSWER HERE`
+`The __getitem__ function for the MediumImagenet Dataset first loads the image file associated with the Dataset's split. If the Dataset is a test set, then the function also gets its corresponding label; otherwise, the image's label is set as -1. Finally, we transform the image and cast the label into a tensor. There are 3 data splits: train, val, and test. Only the test set has labels.`
 
 ### 1.2.3 Visualizing the dataset
 
@@ -136,16 +136,15 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## What models are implemented for you?
 
-`YOUR ANSWER HERE`
+`LeNet and ResNet`
 
 ## What do PyTorch models inherit from? What functions do we need to implement for a PyTorch Model? (hint there are 2)
 
-`YOUR ANSWER HERE`
+`PyTorch models inherit from nn.Module. A PyTorch model needs to implement the __init__ and forward functions`
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
-`YOUR ANSWER HERE`
-
+`LeNet has 2 convolution layers (each followed by a sigmoid activation function and a pooling layer) plus a classifier with 3 hidden layers. This implementation has 99.28K parameters.`
 
 
 # Part 3: Training
@@ -154,16 +153,29 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.0 What configs have we provided for you? What models and datasets do they train on?
 
-`YOUR ANSWER HERE`
+`configs/ has configs for a base LeNet model for CIFAR10, a base ResNet18 model for CIFAR10, and a base ResNet model for Imagenet.`
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-`YOUR ANSWER HERE`
+`* Builds the loader specified by the config
+* Builds the model specified by the config
+* Displays information about the model's parameters and flop counts
+* Builds an optimizer for the model
+* If the config specifies that we are resuming training for a model, load the checkpoint
+* Otherwise begin training the model from scratch:
+    * For each epoch:
+        * Train one epoch of the model
+        * Log the model's training accuracy and training loss
+        * Validate the model and log its valiation accuracy and validation loss
+        * Save a checkpoint
+        * Print the max accuracy so far during training
+* Log information about the total training time
+* Evaluate the model on the test DataLoader`
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
 
-`YOUR ANSWER HERE`
+`validate computes the outputs of the model on the validation set then calculates the accuracy of the model by comparing the model's predictions with the true labels of the validation set. evaluate() simply computes the outputs of the model given a dataset without comparing the model's predictions with anything.`
 
 
 # Part 4: AlexNet
