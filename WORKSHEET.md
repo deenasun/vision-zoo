@@ -62,7 +62,7 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
 
-![Alt text](/main_diagram.jpeg)
+![Alt text](/images/main_diagram.jpeg)
 
 
 # Part 1: Datasets
@@ -115,11 +115,11 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ### 1.2.1 How is `_get_transforms` different from the one in CIFAR10Dataset?
 
-`The _get_transforms function in the MediumImagenetHDF5 Dataset also regularizes the values in each sample point to be bewteen 0 to 255 and normalizes each sample point with a mean and standard deviation. For this Dataset, we also apply a resizing that scales the image by 2. The additional steps of randomly flipping the image and randomizing the image's brightness, contrast, and saturation are applied only if the Dataset is a training split and the Dataset's augment parameter is set to True."
+`The _get_transforms function in the MediumImagenetHDF5 Dataset also regularizes the values in each sample point to be bewteen 0 to 255 and normalizes each sample point with a mean and standard deviation. For this Dataset, we also apply a resizing that scales the image by 2. The additional steps of randomly flipping the image and randomizing the image's brightness, contrast, and saturation are applied only if the Dataset is a training split and the Dataset's augment parameter is set to True.`
 
 ### 1.2.2 How is `__getitem__` different from the one in CIFAR10Dataset? How many data splits do we have now? Is it different from CIFAR10? Do we have labels/annotations for the test set?
 
-`The __getitem__ function for the MediumImagenet Dataset first loads the image file associated with the Dataset's split. If the Dataset is a test set, then the function also gets its corresponding label; otherwise, the image's label is set as -1. Finally, we transform the image and cast the label into a tensor. There are 3 data splits: train, val, and test. Only the test set has labels.`
+`The __getitem__ function for the MediumImagenet Dataset first loads the image file associated with the Dataset's split. If the Dataset isn't a test set, then the function also gets its corresponding label; otherwise, the image's label is set as -1. Finally, we transform the image and cast the label into a tensor. There are 3 data splits: train, val, and test. Only the test set has labels.`
 
 ### 1.2.3 Visualizing the dataset
 
@@ -127,8 +127,11 @@ Visualize ~10 or so examples from the dataset. There's many ways to do it - you 
 
 Be sure to also get the class names. You might notice that we don't have them loaded anywhere in the repo - feel free to fix it or just hack it together for now, the class names are in a file in the same folder as the hdf5 dataset.
 
-`YOUR ANSWER HERE`
+![Alt text](/images/visualize_imagenet.png)
+`Visualizing the images from the imagenet dataset`
 
+![Alt text](/images/visualize_dataloader_train.png)
+`Visualizing the sample images form the imagenet training Dataloader`
 
 # Part 2: Models
 
@@ -157,7 +160,7 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-`* Builds the loader specified by the config
+* Builds the loader specified by the config
 * Builds the model specified by the config
 * Displays information about the model's parameters and flop counts
 * Builds an optimizer for the model
@@ -170,7 +173,7 @@ The following questions relate to `main.py`, and the configs in `configs/`.
         * Save a checkpoint
         * Print the max accuracy so far during training
 * Log information about the total training time
-* Evaluate the model on the test DataLoader`
+* Evaluate the model on the test DataLoader
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
