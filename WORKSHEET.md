@@ -73,17 +73,17 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ### 1.0.0 What does `build_loader` do?
 
-`YOUR ANSWER HERE`
+`Based on what the dataset defined in config is, build_loader will first get the training, validation, and test splits from the dataset. Then it will create 3 DataLoaders using the training, validation, and test splits.`
 
-### 1.0.1 What functions do you need to implement for a PyTorch Datset? (hint there are 3)
+### 1.0.1 What functions do you need to implement for a PyTorch Dataset? (hint there are 3)
 
-`YOUR ANSWER HERE`
+`To create a custom PyTorch Dataset, we need to implement the functions __init__, __getitem__, and __len__.`
 
 ## 1.1 CIFAR10Dataset
 
 ### 1.1.0 Go through the constructor. What field actually contains the data? Do we need to download it ahead of time?
 
-`YOUR ANSWER HERE`
+`The field "dataset" contains the data. The parameter root="/data/cifar10" indicates the directory that the dataset will be stored in. But since we set download=True, if the dataset doesn't exist in this directory already, the constructor will download it. We don't need to downlaod the data ahead of time because if it doesn't already exist, PyTorch will load it for us.`
 
 ### 1.1.1 What is `self.train`? What is `self.transform`?
 
