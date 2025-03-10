@@ -126,12 +126,11 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 Visualize ~10 or so examples from the dataset. There's many ways to do it - you can make a separate little script that loads the datasets and displays some images, or you can update the existing code to display the images where it's already easy to load them. In either case, you can use use `matplotlib` or `PIL` or `opencv` to display/save the images. Alternatively you can also use `torchvision.utils.make_grid` to display multiple images at once and use `torchvision.utils.save_image` to save the images to disk.
 
 Be sure to also get the class names. You might notice that we don't have them loaded anywhere in the repo - feel free to fix it or just hack it together for now, the class names are in a file in the same folder as the hdf5 dataset.
-
-![Alt text](/images/visualize_imagenet.png)
 `Visualizing the images from the imagenet dataset`
+![Alt text](/images/visualize_imagenet.png)
 
+`Visualizing the sample images from the imagenet training Dataloader`
 ![Alt text](/images/visualize_dataloader_train.png)
-`Visualizing the sample images form the imagenet training Dataloader`
 
 # Part 2: Models
 
