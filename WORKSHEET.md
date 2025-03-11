@@ -159,7 +159,7 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-* Builds the loader specified by the config
+```* Builds the loader specified by the config
 * Builds the model specified by the config
 * Displays information about the model's parameters and flop counts
 * Builds an optimizer for the model
@@ -172,7 +172,7 @@ The following questions relate to `main.py`, and the configs in `configs/`.
         * Save a checkpoint
         * Print the max accuracy so far during training
 * Log information about the total training time
-* Evaluate the model on the test DataLoader
+* Evaluate the model on the test DataLoader```
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
@@ -203,12 +203,14 @@ Linear with 4096 output units
 Linear with num_classes output units
 ```
 
-> ReLU activation after every Conv and Linear layer. DO **NOT** Forget to add activatioons after every layer. Do not apply activation after the last layer.
+> ReLU activation after every Conv and Linear layer. DO **NOT** Forget to add activations after every layer. Do not apply activation after the last layer.
 
 ## 4.1 How many parameters does AlexNet have? How does it compare to LeNet? With the same batch size, how much memory do LeNet and AlexNet take up while training? 
-> (hint: use `gpuststat`)
+> (hint: use `gpustat`)
 
-`YOUR ANSWER HERE`
+`AlexNet has 57.82324M parameters while LeNet has 99.28K.
+
+AlexNet takes up 1456 MB while training while LeNet takes up 272 MB while training.`
 
 ## 4.2 Train AlexNet on CIFAR10. What accuracy do you get?
 
@@ -217,9 +219,32 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 > You can just copy the config file, don't need to write it all out again.
 > Also no need to tune the models much, you'll do it in the next part.
 
-`YOUR ANSWER HERE`
+```AlexNet hyperparameters
+* Image size: 70
+* Learning rate: 0.0003
+* Batch size: 256
+* Optimizer: AdamW
+* Optimizer beta: 0.9
+* Optimizer epsilon: 1e-8
+* Drop-out rate: 0.5
+* Learning rate scheduler: cosine
 
+AlexNet training accuracy after 50 epochs: 99.9%
+AlexNet validation accuracy after 50 epochs: 76.79%
 
+LeNet hyperparameters:
+* Image size: 32
+* Learning rate: 0.0003
+* Batch size: 256
+* Optimizer: AdamW
+* Optimizer beta: 0.9
+* Optimizer epsilon: 1e-8
+* Drop-out rate: 0.5
+* Learning rate scheduler: cosine
+
+LeNet training accuracy after 50 epochs: 37.2%
+LeNet validation accuracy after 50 epochs: 38.6%
+```
 
 # Part 5: Weights and Biases
 
@@ -231,19 +256,67 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 
 ## 5.0 Setup plotting for training and validation accuracy and loss curves. Plot a point every epoch.
 
-`PUSH YOUR CODE TO YOUR OWN GITHUB :)`
+```
+    # initialize wandb run
+    run = wandb.init(
+        project='vision-zoo',
+        name=config.MODEL.NAME,
+        config={
+            "dataset": config.DATA.DATASET,
+            "batch_size": config.DATA.BATCH_SIZE,
+            "image_size": config.DATA.IMG_SIZE,
+            "learning_rate": config.TRAIN.LR,
+            "epochs": config.TRAIN.EPOCHS,
+            "optimizer": config.TRAIN.OPTIMIZER.NAME,
+        },
+    )
+
+    # define number of epochs as custom x-axis
+    wandb.define_metric("epoch")
+    wandb.define_metric("train_acc", step_metric="epoch")
+    wandb.define_metric("train_loss", step_metric="epoch")
+    wandb.define_metric("val_acc", step_metric="epoch")
+    wandb.define_metric("val_loss", step_metric="epoch")
+
+    ...
+
+    # saving stats to wandb
+        wandb.log({
+            "epoch": epoch,
+            "train_acc": train_acc1, 
+            "train_loss": train_loss, 
+            "val_acc": val_acc1, 
+            "val_loss": val_loss
+        })
+```
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
-`YOUR ANSWER HERE`
+![Alt text](/images/alexnet_vs_lenet.png)
+`AlexNet's validation loss starts lower and decreases, but then trends upwards after about 20 epochs whereas LeNet's validation loss decreaes steadily downward. However, AlexNet's training loss converges near 0 whereas LeNet's training loss plateaus around 1.7 even after 50 epohcs. AlexNet reached much higher training and validation accuracies (nearly double or triple that of LeNet).`
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.
 
-`YOUR ANSWER HERE`
+```
+Learning rates tried
+(Original) LR: 3e-4    Max accuracy: 77.42%    Final valiation loss: 1.798
+LR: 1e-4    Max accuracy: 76.44%    Final validation loss: 1.478
+LR: 3e-3    Max accuracy: 10.00%    Final valiation loss: 2.303
+LR: 1e-3    Max accuracy: 10.00%    Final valiation loss: 2.303
+LR: 1e-5    Max accuracy: 62.11%    Final valiation loss: 1.071
+
+```
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
-`YOUR ANSWER HERE`
+```
+Batch sizes tried
+(Original) Batch size: 256     Max accuracy: 77.42%%    Final validation loss: 1.798
+Batch size: 128     Max accuracy: 77.47%    Final valiation loss: 1.966
+Batch size: 2048    Max accuracy: 72.72%    Final valiation loss: 0.8826
+Batch size: 5000    Max accuracy: 60.33%    Final valiation loss: 1.105
+Batch size: 23      Max accuracy: 76.33    Final valiation loss: 2.007
+```
 
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
 You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 

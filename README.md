@@ -44,7 +44,7 @@ models/             # contains all of the model related code
   resnet.py         # ResNet definition
   ...
 utils/              # misc. utils for the project
-  ... 
+  ... P
 config.py           # contains the config parser; define defaults here!!
 main.py             # main training loop
 optimizer.py        # optimizer definition

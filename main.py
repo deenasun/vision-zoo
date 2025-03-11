@@ -20,6 +20,7 @@ from models import build_model
 from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
+import wandb
 
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
@@ -84,6 +85,27 @@ def main(config):
         if config.EVAL_MODE:
             return
 
+    # initialize wandb run
+    run = wandb.init(
+        project='vision-zoo',
+        name=f"{config.MODEL.NAME}-lr{config.TRAIN.LR}",
+        config={
+            "dataset": config.DATA.DATASET,
+            "batch_size": config.DATA.BATCH_SIZE,
+            "image_size": config.DATA.IMG_SIZE,
+            "learning_rate": config.TRAIN.LR,
+            "epochs": config.TRAIN.EPOCHS,
+            "optimizer": config.TRAIN.OPTIMIZER.NAME,
+        },
+    )
+
+    # define number of epochs as custom x-axis
+    wandb.define_metric("epoch")
+    wandb.define_metric("train_acc", step_metric="epoch")
+    wandb.define_metric("train_loss", step_metric="epoch")
+    wandb.define_metric("val_acc", step_metric="epoch")
+    wandb.define_metric("val_loss", step_metric="epoch")
+
     logger.info("Start training")
     start_time = time.time()
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
@@ -110,6 +132,16 @@ def main(config):
                 os.path.join(config.OUTPUT, "metrics.json"), mode="a", encoding="utf-8"
             ) as f:
                 f.write(json.dumps(log_stats) + "\n")
+        
+        # saving stats to wandb
+        wandb.log({
+            "epoch": epoch,
+            "train_acc": train_acc1, 
+            "train_loss": train_loss, 
+            "val_acc": val_acc1, 
+            "val_loss": val_loss
+        })
+
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))

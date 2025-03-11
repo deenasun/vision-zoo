@@ -1,0 +1,15 @@
+{"time":"2025-03-11T07:27:59.335142386Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/deena/nmep/sp25-nmep-hw2/wandb/run-20250311_072759-bkoil314/logs/debug-core.log"}
+{"time":"2025-03-11T07:27:59.558703084Z","level":"INFO","msg":"created new stream","id":"bkoil314"}
+{"time":"2025-03-11T07:27:59.558773492Z","level":"INFO","msg":"stream: started","id":"bkoil314"}
+{"time":"2025-03-11T07:27:59.558779896Z","level":"INFO","msg":"handler: started","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:27:59.558831161Z","level":"INFO","msg":"sender: started","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:27:59.558848571Z","level":"INFO","msg":"writer: Do: started","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:27:59.741437579Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-11T07:28:01.034128091Z","level":"INFO","msg":"stream: closing","id":"bkoil314"}
+{"time":"2025-03-11T07:28:01.034189077Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-11T07:28:01.035079227Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-11T07:28:01.485601284Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-11T07:28:01.595367985Z","level":"INFO","msg":"handler: closed","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:28:01.595395595Z","level":"INFO","msg":"writer: Close: closed","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:28:01.595411266Z","level":"INFO","msg":"sender: closed","stream_id":"bkoil314"}
+{"time":"2025-03-11T07:28:01.595482468Z","level":"INFO","msg":"stream: closed","id":"bkoil314"}
