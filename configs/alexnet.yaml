@@ -11,9 +11,9 @@ MODEL:
   NUM_CLASSES: 200
   DROP_RATE: 0.5
 TRAIN:
-  EPOCHS: 50
+  EPOCHS: 5 # original: 50
   WARMUP_EPOCHS: 10
-  LR: 3e-3 # original: 3e-4
+  LR: 3e-4 # original: 3e-4
   MIN_LR: 3e-5
   WARMUP_LR: 3e-5
   LR_SCHEDULER:

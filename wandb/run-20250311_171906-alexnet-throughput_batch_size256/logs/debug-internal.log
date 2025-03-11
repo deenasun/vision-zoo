@@ -1,0 +1,15 @@
+{"time":"2025-03-11T17:19:06.931552572Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/deena/nmep/sp25-nmep-hw2/wandb/run-20250311_171906-alexnet-throughput_batch_size256/logs/debug-core.log"}
+{"time":"2025-03-11T17:19:07.052933799Z","level":"INFO","msg":"created new stream","id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:07.053008216Z","level":"INFO","msg":"stream: started","id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:07.053040191Z","level":"INFO","msg":"handler: started","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:07.053035777Z","level":"INFO","msg":"writer: Do: started","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:07.053135612Z","level":"INFO","msg":"sender: started","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:07.28883688Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-11T17:19:58.520068098Z","level":"INFO","msg":"stream: closing","id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:58.520114248Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-11T17:19:58.520963692Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-11T17:19:58.957888213Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-11T17:19:59.071358153Z","level":"INFO","msg":"handler: closed","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:59.07141395Z","level":"INFO","msg":"writer: Close: closed","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:59.071439575Z","level":"INFO","msg":"sender: closed","stream_id":"alexnet-throughput_batch_size256"}
+{"time":"2025-03-11T17:19:59.071545783Z","level":"INFO","msg":"stream: closed","id":"alexnet-throughput_batch_size256"}

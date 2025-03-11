@@ -3,7 +3,7 @@ from torch import nn
 
 class AlexNet(nn.Module):
     """
-    CUDA_VISIBLE_DEVICES=0 python main.py --cfg=configs/alexnet.yaml  
+    CUDA_VISIBLE_DEVICES=0 python main.py --cfg=configs/alexnet.yaml
     """
     def __init__(self, num_classes: int = 200):
         super().__init__()

@@ -297,6 +297,8 @@ LeNet validation accuracy after 50 epochs: 38.6%
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.
 
+![Alt text](/images/alexnet_learningrates.png)
+![Alt text](/images/alexnet_learningrates_runtimes.png)
 ```
 Learning rates tried
 (Original) LR: 3e-4    Max accuracy: 77.42%    Final valiation loss: 1.798
@@ -309,19 +311,21 @@ LR: 1e-5    Max accuracy: 62.11%    Final valiation loss: 1.071
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
+![Alt text](/images/alexnet_batchsizes.png)
+![Alt text](/images/alexnet_batchsizes_runtimes.png)
 ```
 Batch sizes tried
-(Original) Batch size: 256     Max accuracy: 77.42%%    Final validation loss: 1.798
-Batch size: 128     Max accuracy: 77.47%    Final valiation loss: 1.966
-Batch size: 2048    Max accuracy: 72.72%    Final valiation loss: 0.8826
-Batch size: 5000    Max accuracy: 60.33%    Final valiation loss: 1.105
-Batch size: 23      Max accuracy: 76.33    Final valiation loss: 2.007
+(Original) Batch size: 256     Max accuracy: 77.42%%    Final validation loss: 1.798    Total training time: 6 min, 57 sec
+Batch size: 128             Max accuracy: 77.47%    Final valiation loss: 1.966     Total training time: 12 min, 35 sec
+Batch size: 2048            Max accuracy: 72.72%    Final valiation loss: 0.8826    Total training time: 11 min, 31 sec
+Batch size: 5000            Max accuracy: 60.33%    Final valiation loss: 1.105     Total training time: 11 min, 28 sec
+Batch size: 23              Max accuracy: 76.33    Final valiation loss: 2.007      Total training time: 29 min, 35 sec
 ```
 
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
-You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 
+You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html).
 
-`YOUR ANSWER HERE`
+`Reached CUDA OOM with batch_size of 32768. The largest batch size the server could support was 16384.`
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
