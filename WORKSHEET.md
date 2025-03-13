@@ -307,6 +307,9 @@ LR: 3e-3    Max accuracy: 10.00%    Final valiation loss: 2.303
 LR: 1e-3    Max accuracy: 10.00%    Final valiation loss: 2.303
 LR: 1e-5    Max accuracy: 62.11%    Final valiation loss: 1.071
 
+When the learning rates were too high (e.g. 0.003), the model did not learn the data very well. Training accuracies and validation accuracies were very low for the AlexNet model with a learning rate of 0.003. Furthermore, that model had the highest loss and its validation and training losses did not fluctuate at all over the course of 50 epochs.
+
+With the smallest learning rate I tested (1-e5), the training accuracies and validation accuracies were also very low. However, unlike the other models which seemed to start overfitting after about 25 epochs (based on the increasing validation loss), the AlexNet model with a learning rate of 1e-5 was still exhibiting decreasing validation losses. This could be due to the fact that it hadn't yet found a minimum yet for its loss function given how small the step sizes were.
 ```
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
@@ -331,7 +334,12 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
-`YOUR ANSWER HERE`
+![Alt text](/images/alexnet_transforms.png.png)
+```
+Base transforms: 76.78% validation accuracy, 99.862% training accuracy
+Random crop: 74.20% validation accuracy, 100% training accuracy
+Gaussian blur: 73.62% validation accuracy, 100% training accuracy
+```
 
 ## 5.6 (optional) Play around with more hyperparameters. I recommend playing around with the optimizer (Adam, SGD, RMSProp, etc), learning rate scheduler (constant, StepLR, ReduceLROnPlateau, etc), weight decay, dropout, activation functions (ReLU, Leaky ReLU, GELU, Swish, etc), etc.
 

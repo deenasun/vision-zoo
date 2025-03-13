@@ -1,0 +1,89 @@
+[32m[2025-03-13 01:39:10 alexnet][0m[33m(main.py 115)[0m: INFO Start training
+                                                                                                                                        
+[32m[2025-03-13 01:39:17 alexnet][0m[33m(main.py 194)[0m: INFO Train: [0/50]	lr 0.000300	time 0.0338 (0.0377)	loss 1.5487 (2.1781)	Acc@1 35.000 (19.394)	Mem 1137MB
+[32m[2025-03-13 01:39:17 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 0 training takes 0:00:07
+[32m[2025-03-13 01:39:17 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 19.394 Train Loss 2.178
+[32m[2025-03-13 01:39:17 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 19.4%
+[32m[2025-03-13 01:39:19 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.012 (0.043)	Loss 1.9417 (1.6633)	Acc@1 31.250 (35.370)	Mem 1137MB
+[32m[2025-03-13 01:39:19 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 35.370 Val Loss 1.663
+[32m[2025-03-13 01:39:19 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 35.4%
+[32m[2025-03-13 01:39:19 alexnet][0m[33m(load_save.py 48)[0m: INFO output/alexnet/ckpt_best.pth saving......
+[32m[2025-03-13 01:39:23 alexnet][0m[33m(load_save.py 50)[0m: INFO output/alexnet/ckpt_best.pth saved !!!
+[32m[2025-03-13 01:39:23 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 35.37%
+
+[32m[2025-03-13 01:39:31 alexnet][0m[33m(main.py 194)[0m: INFO Train: [1/50]	lr 0.000300	time 0.0344 (0.0412)	loss 1.3721 (1.4649)	Acc@1 46.250 (45.458)	Mem 1137MB
+[32m[2025-03-13 01:39:31 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 1 training takes 0:00:08
+[32m[2025-03-13 01:39:31 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 45.458 Train Loss 1.465
+[32m[2025-03-13 01:39:31 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 45.5%
+[32m[2025-03-13 01:39:33 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.008 (0.059)	Loss 0.9451 (1.2698)	Acc@1 56.250 (53.620)	Mem 1137MB
+[32m[2025-03-13 01:39:33 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 53.620 Val Loss 1.270
+[32m[2025-03-13 01:39:33 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 53.6%
+[32m[2025-03-13 01:39:33 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 53.62%
+
+[32m[2025-03-13 01:39:41 alexnet][0m[33m(main.py 194)[0m: INFO Train: [2/50]	lr 0.000299	time 0.0350 (0.0407)	loss 1.3208 (1.2271)	Acc@1 55.000 (56.088)	Mem 1137MB
+[32m[2025-03-13 01:39:41 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 2 training takes 0:00:08
+[32m[2025-03-13 01:39:41 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 56.088 Train Loss 1.227
+[32m[2025-03-13 01:39:41 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 56.1%
+[32m[2025-03-13 01:39:44 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.008 (0.057)	Loss 0.8163 (1.0906)	Acc@1 75.000 (61.750)	Mem 1137MB
+[32m[2025-03-13 01:39:44 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 61.750 Val Loss 1.091
+[32m[2025-03-13 01:39:44 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 61.8%
+[32m[2025-03-13 01:39:44 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 61.75%
+
+[32m[2025-03-13 01:39:53 alexnet][0m[33m(main.py 194)[0m: INFO Train: [3/50]	lr 0.000297	time 0.0308 (0.0444)	loss 1.0865 (1.0774)	Acc@1 55.000 (61.890)	Mem 1137MB
+[32m[2025-03-13 01:39:53 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 3 training takes 0:00:08
+[32m[2025-03-13 01:39:53 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 61.890 Train Loss 1.077
+[32m[2025-03-13 01:39:53 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 61.9%
+[32m[2025-03-13 01:39:55 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.006 (0.053)	Loss 0.5468 (0.9851)	Acc@1 81.250 (65.480)	Mem 1137MB
+[32m[2025-03-13 01:39:55 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 65.480 Val Loss 0.985
+[32m[2025-03-13 01:39:55 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 65.5%
+[32m[2025-03-13 01:39:55 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 65.48%
+
+[32m[2025-03-13 01:40:04 alexnet][0m[33m(main.py 194)[0m: INFO Train: [4/50]	lr 0.000295	time 0.0179 (0.0434)	loss 0.8405 (0.9638)	Acc@1 71.250 (66.228)	Mem 1137MB
+[32m[2025-03-13 01:40:04 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 4 training takes 0:00:08
+[32m[2025-03-13 01:40:04 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 66.228 Train Loss 0.964
+[32m[2025-03-13 01:40:04 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 66.2%
+[32m[2025-03-13 01:40:08 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.013 (0.094)	Loss 0.5816 (0.9014)	Acc@1 81.250 (68.760)	Mem 1137MB
+[32m[2025-03-13 01:40:08 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 68.760 Val Loss 0.901
+[32m[2025-03-13 01:40:08 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 68.8%
+[32m[2025-03-13 01:40:08 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 68.76%
+
+[32m[2025-03-13 01:40:17 alexnet][0m[33m(main.py 194)[0m: INFO Train: [5/50]	lr 0.000293	time 0.0220 (0.0488)	loss 0.7812 (0.8744)	Acc@1 73.750 (69.324)	Mem 1137MB
+[32m[2025-03-13 01:40:17 alexnet][0m[33m(main.py 203)[0m: INFO EPOCH 5 training takes 0:00:09
+[32m[2025-03-13 01:40:17 alexnet][0m[33m(main.py 119)[0m: INFO  * Train Acc 69.324 Train Loss 0.874
+[32m[2025-03-13 01:40:17 alexnet][0m[33m(main.py 120)[0m: INFO Accuracy of the network on the 50000 train images: 69.3%
+[32m[2025-03-13 01:40:20 alexnet][0m[33m(main.py 237)[0m: INFO Validate: 	Time 0.005 (0.065)	Loss 0.3578 (0.8687)	Acc@1 87.500 (69.300)	Mem 1137MB
+[32m[2025-03-13 01:40:20 alexnet][0m[33m(main.py 124)[0m: INFO  * Val Acc 69.300 Val Loss 0.869
+[32m[2025-03-13 01:40:20 alexnet][0m[33m(main.py 125)[0m: INFO Accuracy of the network on the 10000 val images: 69.3%
+[32m[2025-03-13 01:40:20 alexnet][0m[33m(load_save.py 48)[0m: INFO output/alexnet/ckpt_best.pth saving......
+[32m[2025-03-13 01:40:23 alexnet][0m[33m(load_save.py 50)[0m: INFO output/alexnet/ckpt_best.pth saved !!!
+[32m[2025-03-13 01:40:23 alexnet][0m[33m(main.py 131)[0m: INFO Max accuracy: 69.30%
+Traceback (most recent call last):
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 59, in _pin_memory_loop
+    do_one_step()
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 35, in do_one_step
+    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/multiprocessing/reductions.py", line 541, in rebuild_storage_fd
+    fd = df.detach()
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/multiprocessing/resource_sharer.py", line 57, in detach
+    with _resource_sharer.get_connection(self._id) as conn:
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/multiprocessing/resource_sharer.py", line 86, in get_connection
+    c = Client(address, authkey=process.current_process().authkey)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/multiprocessing/connection.py", line 502, in Client
+    c = SocketClient(address)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/multiprocessing/connection.py", line 630, in SocketClient
+    s.connect(address)
+FileNotFoundError: [Errno 2] No such file or directory
+Traceback (most recent call last):                                                                                                      
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 281, in <module>
+    main(config)
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 118, in main
+    train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 187, in train_one_epoch
+    loss_meter.update(loss.item(), targets.size(0))
+KeyboardInterrupt

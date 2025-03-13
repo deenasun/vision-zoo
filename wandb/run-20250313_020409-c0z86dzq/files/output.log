@@ -1,0 +1,39 @@
+[32m[2025-03-13 02:04:09 alexnet][0m[33m(main.py 115)[0m: INFO Start training
+Traceback (most recent call last):                                                                                                      
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 281, in <module>
+    main(config)
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 118, in main
+    train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 175, in train_one_epoch
+    for idx, (samples, targets) in enumerate(tqdm(data_loader, leave=False)):
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1480, in _next_data
+    return self._process_data(data)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1505, in _process_data
+    data.reraise()
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/_utils.py", line 733, in reraise
+    raise exception
+ValueError: Caught ValueError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/deena/nmep/sp25-nmep-hw2/data/datasets.py", line 109, in __getitem__
+    image = self.transform(image)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/transforms.py", line 95, in __call__
+    img = t(img)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/transforms.py", line 681, in forward
+    i, j, h, w = self.get_params(img, self.size)
+  File "/home/deena/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/transforms.py", line 640, in get_params
+    raise ValueError(f"Required crop size {(th, tw)} is larger than input image size {(h, w)}")
+ValueError: Required crop size (70, 70) is larger than input image size (32, 32)

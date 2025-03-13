@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import h5py
 import torch
+import tarfile
 from PIL import Image, ImageFile
 from torch.utils.data import Dataset, Subset
 from torchvision import transforms
@@ -115,11 +116,13 @@ class CIFAR10Dataset(Dataset):
     def _get_transforms(self):
         if self.train:
             transform = [
-                transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
-                transforms.RandomHorizontalFlip(),
+                # transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
+                # transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
                 transforms.Resize([self.img_size] * 2),
+                # transforms.RandomCrop(self.img_size) # adding additional transformations
+                transforms.GaussianBlur(kernel_size=(5,5)), # adding additional transformations
             ]
         else:
             transform = [
