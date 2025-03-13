@@ -88,7 +88,7 @@ def main(config):
     # initialize wandb run
     run = wandb.init(
         project='vision-zoo',
-        name=f"{config.MODEL.NAME}-blur",
+        name=f"{config.MODEL.NAME}",
         config={
             "dataset": config.DATA.DATASET,
             "batch_size": config.DATA.BATCH_SIZE,

@@ -69,9 +69,11 @@ class MediumImagenetHDF5Dataset(Dataset):
         self.file = h5py.File(filepath, "r")
 
     def __getitem__(self, index):
-        image = self.file[f"images-{self.split}"][index]
+        # image = self.file[f"images-{self.split}"][index]
+        image = self.file[f"/images-{self.split}"][index]
         if self.split != "test":
-            label = self.file[f"labels-{self.split}"][index]
+            # label = self.file[f"labels-{self.split}"][index]
+            label = self.file[f"/labels-{self.split}"][index]
         else:
             label = -1
         image = self.transform(image)
@@ -116,13 +118,13 @@ class CIFAR10Dataset(Dataset):
     def _get_transforms(self):
         if self.train:
             transform = [
-                # transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
-                # transforms.RandomHorizontalFlip(),
+                transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
+                transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
                 transforms.Resize([self.img_size] * 2),
                 # transforms.RandomCrop(self.img_size) # adding additional transformations
-                transforms.GaussianBlur(kernel_size=(5,5)), # adding additional transformations
+                # transforms.GaussianBlur(kernel_size=(5,5)), # adding additional transformations
             ]
         else:
             transform = [

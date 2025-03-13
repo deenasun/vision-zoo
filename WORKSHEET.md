@@ -330,7 +330,7 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 ![Alt text](/images/alexnet_throughput.png)
 
-`Reached CUDA OOM with batch_size of 32768. The largest batch size the server could support was 16384.`
+`For batch sizes of 1 and 2, it took an extremely long time for the model to train on even just 5 epochs. The model that took the fastest time to train used a batch size of 512. The total training time did not decrease montonically; the total training time also started increasing as the batch sizes got very large, although not to the scale of a batch size of 1. Throughput increased as batch size increased. I reached CUDA OOM with batch_size of 32768---the largest batch size the server could support was 16384.`
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
@@ -353,7 +353,26 @@ Gaussian blur: 73.62% validation accuracy, 100% training accuracy
 
 In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
-`YOUR ANSWER HERE`
+![Alt text](/images/alexnet_vs_resnet.png)
+```
+AlexNet
+Hyperparameters: learning rate = 0.0003, optimizer = AdamW, epochs = 50
+Training time: 6 min 57 secs
+Best validation accuracy: 77.26%
+Validation loss at epoch 50: 1.79779
+
+ResNet
+Hyperparameters: learning rate = 0.0003, optimizer = AdamW, epochs = 50
+Training time: 17 min 40 sec
+Best validation accuracy: 88.64%
+Validation loss at epoch 50: 0.56221
+
+ResNet18 Base
+Hyperparameters: learning rate = 0.0003, optimizer = AdamW, epochs = 100
+Training time: 31 min 46 sec
+Best validation accuracy: 85.92%
+Validation loss at epoch 100: 0.701
+```
 
 ## 6.1 (optional) Visualize examples
 

@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# CUDA_VISIBLE_DEVICES=1 python main.py --cfg=configs/resnet.yaml 
+# CUDA_VISIBLE_DEVICES=1 python main.py --cfg=configs/resnet.yaml
 
 class ResNetBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
