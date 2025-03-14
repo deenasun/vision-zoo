@@ -5,12 +5,10 @@ Reference:
 [1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
     Deep Residual Learning for Image Recognition. arXiv:1512.03385
 """
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
 
-# CUDA_VISIBLE_DEVICES=1 python main.py --cfg=configs/resnet.yaml
-# CUDA_VISIBLE_DEVICES=1 python main.py --cfg=configs/resnet18_medium_imagenet.yaml
 
 class ResNetBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
@@ -42,22 +40,28 @@ class ResNetBlock(nn.Module):
 
         ## Initialize the block with a call to super and make your conv and batchnorm layers.
         super(ResNetBlock, self).__init__()
-        # TODO: Initialize conv and batch norm layers with the correct parameters
+        
+        # First convolutional layer with batch normalization
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
-        self.batch1 = nn.BatchNorm2d(out_channels)
-
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.relu1 = nn.ReLU(inplace=True)  # Use inplace ReLU for better memory efficiency
+        
+        # Second convolutional layer with batch normalization
         self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
-        self.batch2 = nn.BatchNorm2d(out_channels)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+        self.relu2 = nn.ReLU(inplace=True)  # Use inplace ReLU for better memory efficiency
 
         ## Use some conditional logic when defining your shortcut layer
         ## For a no-op layer, consider creating an empty nn.Sequential()
-        self.shortcut = nn.Identity()  # ???
-        # TODO: Code here to initialize the shortcut layer
-        if stride != 1 or out_channels != in_channels:
+        if stride != 1 or in_channels != out_channels:
+            # If dimensions change, shortcut needs to adjust dimensions
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride),
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(out_channels)
             )
+        else:
+            # Identity shortcut
+            self.shortcut = nn.Identity()  # Use Identity instead of Sequential for efficiency
 
         ## END YOUR CODE
 
@@ -69,22 +73,23 @@ class ResNetBlock(nn.Module):
         returns: result of passing x through this block
         """
         ## YOUR CODE HERE
-        ## TODO: Also call the shortcut layer on the original input
-        shortcut_x = self.shortcut(x)
-
-        ## TODO: Call the first convolution, batchnorm, and activation   
-        x1 = F.relu(self.batch1(self.conv1(x)))
-
-        ## TODO: Call the second convolution and batchnorm
-        x2 = self.batch2(self.conv2(x1))
-
-        ## TODO: Sum the result of the shortcut and the result of the second batchnorm
-        ## and apply your activation
-        x2 += shortcut_x
-        x2 = F.relu(x2)
-
-        # return out
-        return x2
+        # Save input for the shortcut
+        identity = self.shortcut(x)
+        
+        # First conv + bn + activation
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu1(out)
+        
+        # Second conv + bn
+        out = self.conv2(out)
+        out = self.bn2(out)
+        
+        # Add shortcut to the output and apply activation
+        out += identity
+        out = self.relu2(out)
+        
+        return out
         ## END YOUR CODE
 
 
@@ -101,10 +106,12 @@ class ResNet18(nn.Module):
                                padding=1,
                                bias=False)
         self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)  # Use inplace ReLU for memory efficiency
         self.layer1 = self.make_block(out_channels=64, stride=1)
         self.layer2 = self.make_block(out_channels=128, stride=2)
         self.layer3 = self.make_block(out_channels=256, stride=2)
         self.layer4 = self.make_block(out_channels=512, stride=2)
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))  # Define as module instead of functional
         self.linear = nn.Linear(512, num_classes)
 
     def make_block(self, out_channels, stride):
@@ -116,12 +123,15 @@ class ResNet18(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        x = F.relu(self.bn1(self.conv1(x)))
+        # Optimized forward pass using module attributes instead of functional calls
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.layer4(x)
-        x = F.avg_pool2d(x, 4)
+        x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.linear(x)
         return x

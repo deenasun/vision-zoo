@@ -1,6 +1,6 @@
 BASE: ['resnet18_base.yaml']
 DATA:
-  BATCH_SIZE: 32
+  BATCH_SIZE: 256
   DATASET: "medium_imagenet"
   IMG_SIZE: 32
   NUM_WORKERS: 32
@@ -8,8 +8,18 @@ DATA:
 MODEL:
   NUM_CLASSES: 200
 TRAIN:
-  EPOCHS: 10
+  EPOCHS: 20 # original: 10
   WARMUP_EPOCHS: 2
+  LR: 6e-4 # original: 3e-4
+  MIN_LR: 3e-5
+  WARMUP_LR: 3e-5
+  LR_SCHEDULER:
+    NAME: "cosine"
+  OPTIMIZER:
+    NAME: "adamw"
+    EPS: 1e-8 # original: 1e-8
+    BETAS: (0.9, 0.999)
+    MOMENTUM: 0.99
 OUTPUT: "output/resnet18_medium_imagenet"
 SAVE_FREQ: 1
 PRINT_FREQ: 500

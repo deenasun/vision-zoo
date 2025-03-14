@@ -7,20 +7,20 @@ DATA:
 MODEL:
   NAME: resnet18
   NUM_CLASSES: 10
-  DROP_RATE: 0.0
+  DROP_RATE: 0.5 # original: 0.0
 TRAIN:
-  EPOCHS: 100
+  EPOCHS: 5 # original: 100
   WARMUP_EPOCHS: 20
-  LR: 3e-4
+  LR: 6e-4 # original: 3e-4
   MIN_LR: 3e-5
   WARMUP_LR: 3e-5
   LR_SCHEDULER:
     NAME: "cosine"
   OPTIMIZER:
     NAME: "adamw"
-    EPS: 1e-8
+    EPS: 1e-8 # original: 1e-8
     BETAS: (0.9, 0.999)
-    MOMENTUM: 0.9
+    MOMENTUM: 0.99
 OUTPUT: "output/resnet18_cifar"
 SAVE_FREQ: 50 
 PRINT_FREQ: 500

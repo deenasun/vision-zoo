@@ -21,6 +21,8 @@ from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
 import wandb
+import pytz
+from torch.amp import GradScaler, autocast
 
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
@@ -49,6 +51,9 @@ def parse_option():
 
 
 def main(config):
+    # Enable cuDNN benchmark for faster performance
+    torch.backends.cudnn.benchmark = True
+    
     dataset_train, dataset_val, dataset_test, data_loader_train, data_loader_val, data_loader_test = build_loader(
         config
     )
@@ -86,9 +91,12 @@ def main(config):
             return
 
     # initialize wandb run
+    timezone = pytz.timezone("US/Pacific")
+    current_time = datetime.datetime.now(timezone)
+
     run = wandb.init(
         project='vision-zoo',
-        name=f"{config.MODEL.NAME}",
+        name=f"{config.MODEL.NAME}_{current_time.strftime('%m-%d-%H-%M-%S')}",
         config={
             "dataset": config.DATA.DATASET,
             "batch_size": config.DATA.BATCH_SIZE,
@@ -96,6 +104,8 @@ def main(config):
             "learning_rate": config.TRAIN.LR,
             "epochs": config.TRAIN.EPOCHS,
             "optimizer": config.TRAIN.OPTIMIZER.NAME,
+            "optimizer_betas": config.TRAIN.OPTIMIZER.BETAS,
+            "optimizer_momentum": config.TRAIN.OPTIMIZER.MOMENTUM
         },
     )
 
@@ -112,14 +122,19 @@ def main(config):
     # throughputs = []
     # batch_size = config.DATA.BATCH_SIZE
 
+    # Initialize gradient scaler for mixed precision training
+    scaler = GradScaler(device=device)
+
     logger.info("Start training")
     start_time = time.time()
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
-        train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+        train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch, scaler)
         logger.info(f" * Train Acc {train_acc1:.3f} Train Loss {train_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_train)} train images: {train_acc1:.1f}%")
         # throughputs.append(batch_size / epoch_time)
 
+        # Only validate every 5 epochs to speed up training, except for the last epoch
+        # if epoch % 5 == 0 or epoch == (config.TRAIN.EPOCHS - 1):
         val_acc1, val_loss = validate(config, data_loader_val, model)
         logger.info(f" * Val Acc {val_acc1:.3f} Val Loss {val_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
@@ -148,6 +163,8 @@ def main(config):
             "val_loss": val_loss
         })
 
+    run.summary["max_val_acc"] = max_accuracy
+
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
@@ -162,7 +179,7 @@ def main(config):
     # TODO save predictions to csv in kaggle format
 
 
-def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
+def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch, scaler):
     model.train()
 
     num_steps = len(data_loader)
@@ -172,18 +189,29 @@ def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
 
     start = time.time()
     end = time.time()
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
     for idx, (samples, targets) in enumerate(tqdm(data_loader, leave=False)):
         samples = samples.cuda(non_blocking=True)
         targets = targets.cuda(non_blocking=True)
 
-        optimizer.zero_grad()
-        outputs = model(samples)
+        optimizer.zero_grad(set_to_none=True)  # Faster than .zero_grad()
+        with autocast(device_type=device): # autocasting for automatic mixed precision
+            outputs = model(samples)
+            loss = criterion(outputs, targets)
+        
+        # loss.backward()
+        # optimizer.step()
 
-        loss = criterion(outputs, targets)
-        loss.backward()
-        optimizer.step()
+        # scale gradients and perform backward pass
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
 
-        (acc1,) = accuracy(outputs, targets)
+        # calculate accuracy
+        with torch.no_grad():
+            (acc1,) = accuracy(outputs, targets)
         loss_meter.update(loss.item(), targets.size(0))
         acc1_meter.update(acc1.item(), targets.size(0))
         batch_time.update(time.time() - end)
@@ -267,7 +295,7 @@ if __name__ == "__main__":
 
     # Make output dir
     os.makedirs(config.OUTPUT, exist_ok=True)
-    logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}")
+    logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}-kaggle")
 
     path = os.path.join(config.OUTPUT, "config.yaml")
     with open(path, "w") as f:

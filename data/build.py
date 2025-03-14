@@ -21,6 +21,8 @@ def build_loader(config):
         shuffle=True,
         num_workers=config.DATA.NUM_WORKERS,
         pin_memory=config.DATA.PIN_MEMORY,
+        persistent_workers=True,
+        prefetch_factor=2,
     )
 
     data_loader_val = DataLoader(
@@ -29,6 +31,7 @@ def build_loader(config):
         shuffle=False,
         num_workers=config.DATA.NUM_WORKERS,
         pin_memory=False,
+        persistent_workers=True
     )
 
     data_loader_test = DataLoader(
