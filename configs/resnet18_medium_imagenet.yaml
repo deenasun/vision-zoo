@@ -1,6 +1,6 @@
 BASE: ['resnet18_base.yaml']
 DATA:
-  BATCH_SIZE: 256
+  BATCH_SIZE: 512
   DATASET: "medium_imagenet"
   IMG_SIZE: 32
   NUM_WORKERS: 32
@@ -8,9 +8,9 @@ DATA:
 MODEL:
   NUM_CLASSES: 200
 TRAIN:
-  EPOCHS: 20 # original: 10
+  EPOCHS: 25 # original: 10
   WARMUP_EPOCHS: 2
-  LR: 6e-4 # original: 3e-4
+  LR: 1e-3 # original: 3e-4
   MIN_LR: 3e-5
   WARMUP_LR: 3e-5
   LR_SCHEDULER:

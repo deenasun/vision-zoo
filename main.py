@@ -295,7 +295,7 @@ if __name__ == "__main__":
 
     # Make output dir
     os.makedirs(config.OUTPUT, exist_ok=True)
-    logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}-kaggle")
+    logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}_kaggle")
 
     path = os.path.join(config.OUTPUT, "config.yaml")
     with open(path, "w") as f:
