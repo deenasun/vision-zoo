@@ -378,8 +378,8 @@ Validation loss at epoch 100: 0.701
 
 Visualize a couple of the predictions on the validation set (20 or so). Be sure to include the ground truth label and the predicted label. You can use `wandb.log()` to log images or also just save them to disc any way you think is easy.
 
-`YOUR ANSWER HERE`
-
+`A few validation images from ResNet trained on the CIFAR10 dataset`
+![Alt text](/images/resnet_visualizations.png)
 
 # Part 7: Kaggle submission
 
@@ -402,3 +402,18 @@ We don't expect anything fancy here. Just a brief summary of what you did, what 
 **REQUIREMENT**: Everyone in your group must be able to explain what you did! Even if one person carries (I know, it happens) everyone must still be able to explain what's going on!
 
 Now go play with the models and have some competitive fun! 🎉
+
+```
+Some optimizations my group tried:
+- Swapped empty nn.Sequential to nn.Identity for the shortcut layer in ResNet
+- Wrapped training under torch.amp.autcast and used a Gradscaler for backward passes (AMP = automatic mixed precision, using different data types optimized for different operations)
+- Adding persistent_workers=True into the training Dataloader to keep worker processes up between epochs
+- Added a prefetch_factor for the Dataloaders
+- Tried out different learning rate schedulers, including ReduceLROnPlateau
+- Tried out different learning rates
+- Tried out different batch sizes
+
+Main challenges:
+- Reducing time taken per epoch for ResNet on larger dataset
+- Overcoming plateaus in validation accuracy
+```

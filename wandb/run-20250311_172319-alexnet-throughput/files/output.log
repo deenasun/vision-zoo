@@ -1,9 +1,0 @@
-[32m[2025-03-11 17:23:20 alexnet][0m[33m(main.py 114)[0m: INFO Start training
-Traceback (most recent call last):                                                                                                                                                                                                   
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 281, in <module>
-    main(config)
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 117, in main
-    train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 176, in train_one_epoch
-    samples = samples.cuda(non_blocking=True)
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 10.75 GiB of which 21.69 MiB is free. Process 520312 has 736.00 MiB memory in use. Process 2202170 has 4.27 GiB memory in use. Process 2720322 has 370.00 MiB memory in use. Process 2957446 has 4.94 GiB memory in use. Including non-PyTorch memory, this process has 440.00 MiB memory in use. Of the allocated memory 228.76 MiB is allocated by PyTorch, and 21.24 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

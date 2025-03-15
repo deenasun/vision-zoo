@@ -1,9 +1,0 @@
-[32m[2025-03-11 07:45:28 alexnet][0m[33m(main.py 109)[0m: INFO Start training
-Traceback (most recent call last):                                                                                                                                                              
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 271, in <module>
-    main(config)
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 112, in main
-    train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
-  File "/home/deena/nmep/sp25-nmep-hw2/main.py", line 178, in train_one_epoch
-    loss_meter.update(loss.item(), targets.size(0))
-KeyboardInterrupt

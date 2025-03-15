@@ -165,6 +165,9 @@ def main(config):
 
     run.summary["max_val_acc"] = max_accuracy
 
+    ims, captions = visualize(data_loader_train, model)
+    images = [wandb.Image(im, caption=cap) for im, cap in zip(ims, captions)]
+    wandb.log({"images": images})
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
@@ -271,7 +274,6 @@ def validate(config, data_loader, model):
     )
     return acc1_meter.avg, loss_meter.avg
 
-
 @torch.no_grad()
 def evaluate(config, data_loader, model):
     model.eval()
@@ -283,6 +285,22 @@ def evaluate(config, data_loader, model):
     preds = np.concatenate(preds)
     return preds
 
+@torch.no_grad()
+def visualize(data_loader, model):
+    """
+    Visualize 20 validation images for logging
+    """
+
+    model.eval()
+
+    images, targets = next(iter(data_loader))
+    images = images.cuda(non_blocking=True)
+    targets = targets.cuda(non_blocking=True)
+    model_preds = model(images)
+
+    ims = images[:20]
+    captions = [f"Prediction: {pred}, True label: {torch.argmax(target)}" for pred, target in list(zip(targets, model_preds))[:20]]
+    return ims, captions
 
 if __name__ == "__main__":
     args, config = parse_option()
